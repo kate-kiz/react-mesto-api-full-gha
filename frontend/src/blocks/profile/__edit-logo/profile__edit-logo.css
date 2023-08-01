@@ -1,0 +1,16 @@
+.profile__edit-logo {
+    width: 10px;
+    height: 10px;
+    background-image: url(../../../images/edit_button.svg);
+    background-size: 10px 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: black; */
+}
+
+@media screen and (min-width: 320px) and (max-width: 670px) {
+    .profile__edit-logo {
+        width: 7.5px;
+        height: 7.5px;
+    }
+}

@@ -1,0 +1,15 @@
+.auth__error {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1;
+    min-height: 30px;
+    color: #FF0000;
+    opacity: 0;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    transition: opacity 0.3s;
+}

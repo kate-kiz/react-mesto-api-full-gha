@@ -1,0 +1,10 @@
+.header__paragraph {
+    color: white;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+    padding: 0;
+    text-decoration: none;
+}

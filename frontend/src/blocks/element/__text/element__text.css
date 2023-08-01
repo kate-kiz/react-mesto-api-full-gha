@@ -1,0 +1,14 @@
+.element__text {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-style: normal;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: left;
+    margin: 0;
+    color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 190px;
+}
