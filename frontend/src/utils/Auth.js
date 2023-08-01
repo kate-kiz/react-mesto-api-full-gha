@@ -1,7 +1,7 @@
 
 // изменить ссылку в base url ???
 const configAuth = {
-    BASE_URL: 'http://localhost:3000',
+    BASE_URL: 'http://158.160.97.4:3000',
     headers: {
         'Content-type': 'application/json',
     },

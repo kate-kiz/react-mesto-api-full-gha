@@ -80,7 +80,7 @@ class Api {
 }
 
 export const api = new Api({
-    url: 'http://localhost:3000',
+    url: 'http://158.160.97.4:3000',
     headers: {
         'Content-type': 'application/json',
         // authorization: 'e24a5663-2327-4061-8ac2-635e8dfeb3de'
