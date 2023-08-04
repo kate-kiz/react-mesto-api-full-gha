@@ -67,7 +67,6 @@ const login = (req, res, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        console.log('not user');
         throw new UnauthorizedError(messageError.UnauthorizedError);
       }
       bcrypt.compare(password, user.password)
@@ -79,10 +78,8 @@ const login = (req, res, next) => {
               { expiresIn: '7d' },
             );
             res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: true })
-              // .send({ data: { name: user.name, about: user.about, _id: user._id } });
               .send({ token });
           } else {
-            console.log('not valid');
             throw new UnauthorizedError(messageError.UnauthorizedError);
           }
         }).catch((error) => next(error));
