@@ -1,8 +1,9 @@
 
 // изменить ссылку в base url ???
 const configAuth = {
-    BASE_URL: 'http://158.160.97.4:3000',
+    BASE_URL: 'http://localhost:3000',
     headers: {
+        'Accept': 'application/json',
         'Content-type': 'application/json',
     },
     endpoint: {
@@ -56,7 +57,10 @@ const register = (email, password) => {
     return fetch(`${BASE_URL}${ENDPOINT_REGISTER}`,
         {
             method: 'POST',
-            headers,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ email, password })
         }
     )

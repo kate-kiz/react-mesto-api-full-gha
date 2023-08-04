@@ -36,35 +36,40 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-  }, [])
+  }, [navigate]);
 
   useEffect(() => {
-    if (loggedIn === true) {
-      api.getInitialCards()
-        .then(result => {
-          setCards(result)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    if (!loggedIn) return;
 
-      api.getUserInfo()
-        .then(result => {
-          setCurrentUser(result)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }, [loggedIn])
+    api.getInitialCards()
+      .then(result => {
+        setCards(result.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+    api.getUserInfo()
+      .then(result => {
+        setCurrentUser(result)
+      })
+      .catch((error) => {
+        console.log("getUserInfo error occured", error)
+      })
+  }, [loggedIn]);
+
+  // useEffect(() => {
+  //   console.log("currentUser", currentUser);
+  // }, [currentUser]);
 
 
   function tokenCheck() {
     const token = localStorage.getItem('token');
+
     if (token) {
       Auth.checkToken(token)
         .then((res) => {
-          const userEmail = res.data.email;
+          const userEmail = res.email;
           setUserEmail(userEmail);
           setLoggedIn(true);
           navigate('/', { replace: true });
@@ -115,11 +120,6 @@ function App() {
     navigate('/sign-in', { replace: true });
   }
 
-  useEffect(() => {
-    tokenCheck();
-  }, [])
-
-
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
   };
@@ -148,12 +148,13 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLikedByCurrentUser = (like) => like === currentUser._id;
+    const isLiked = card.likes.some(isLikedByCurrentUser);
 
     if (!isLiked) {
       api.likeCard(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
         })
         .catch((error) => {
           console.log(error)
@@ -161,7 +162,7 @@ function App() {
     } else {
       api.dislikeCard(card._id)
         .then((newCard) => {
-          setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          setCards((state) => state.map((c) => c._id === card._id ? newCard.data : c));
         })
         .catch((error) => {
           console.log(error)
@@ -182,8 +183,8 @@ function App() {
 
   function handleUpdateUser(data) {
     api.setUserInfo(data)
-      .then((data) => {
-        setCurrentUser(data);
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch((error) => {
@@ -193,8 +194,8 @@ function App() {
 
   function handleUpdateAvatar(data) {
     api.setUserAvatar(data)
-      .then((data) => {
-        setCurrentUser(data);
+      .then((user) => {
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch((error) => {
@@ -203,10 +204,11 @@ function App() {
   }
 
   function handleAddPlaceSubmit(data) {
-    console.log("handleAddPlaceSubmit")
+    console.log("handleAddPlaceSubmit", data);
+
     api.addCard(data)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
         closeAllPopups();
       })
       .catch((error) => {

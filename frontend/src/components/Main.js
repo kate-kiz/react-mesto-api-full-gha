@@ -8,10 +8,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
 function Main({ cards, onAddPlace, onCardClick, onCardDelete, onCardLike, onEditAvatar, onEditProfile }) {
-
     const currentUser = useContext(CurrentUserContext);
-
-    console.log(currentUser);
 
     return (
         <main>
@@ -52,9 +49,9 @@ function Main({ cards, onAddPlace, onCardClick, onCardDelete, onCardLike, onEdit
                     return (<Card
                         card={card}
                         key={card._id}
-                        // title={card.name}
-                        // likeCounter={card.likes.length}
-                        // image={card.link}
+                        title={card.name}
+                        likeCounter={card.likes.length}
+                        image={card.link}
                         onCardClick={onCardClick}
                         onCardLike={onCardLike}
                         onCardDelete={onCardDelete}
