@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const { messageError } = require('../errors/errors');
 // const { handleErrors } = require('../errors/errors');
 
-const { JWT_SECRET = 'test-secret' } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -48,7 +49,6 @@ const getUserInfo = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  // console.log('enter');
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -74,9 +74,10 @@ const login = (req, res, next) => {
           if (isValidUser) {
             const token = jwt.sign(
               { _id: user._id },
-              JWT_SECRET,
+              NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
               { expiresIn: '7d' },
             );
+            console.log(token);
             res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: true })
               .send({ token });
           } else {

@@ -35,7 +35,6 @@ class Api {
     };
 
     getUserInfo() {
-        console.log("api url", this._url);
         return fetch(`${this._url}/users/me`, {
             headers: {
                 ...this._headers,
@@ -105,7 +104,7 @@ class Api {
 }
 
 export const api = new Api({
-    url: 'http://localhost:3000',
+    url: process.env.REACT_APP_API_URL,
     headers: {
         'Content-type': 'application/json',
         // authorization: 'e24a5663-2327-4061-8ac2-635e8dfeb3de'

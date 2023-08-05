@@ -1,7 +1,7 @@
 
 // изменить ссылку в base url ???
 const configAuth = {
-    BASE_URL: 'http://localhost:3000',
+    BASE_URL: process.env.REACT_APP_API_URL,
     headers: {
         'Accept': 'application/json',
         'Content-type': 'application/json',

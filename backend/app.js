@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookies = require('cookie-parser');
 const { errors } = require('celebrate');
+require('dotenv').config();
 
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
@@ -12,6 +13,7 @@ const { handleErrors } = require('./middlewares/errors');
 const NotFoundError = require('./errors/NotFoundError');
 const { messageError } = require('./errors/errors');
 const { registerValidation, loginValidation } = require('./middlewares/validation');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const {
   MONGODB_URL = 'mongodb://127.0.0.1:27017/mestodb',
@@ -23,8 +25,8 @@ mongoose.connect(MONGODB_URL, {
 });
 
 const app = express();
-
-const ALLOWED_CORS = ['http://localhost:3001'];
+console.log(process.env.NODE_ENV);
+const ALLOWED_CORS = [process.env.ALLOWED_ORIGINS];
 
 app.use((req, res, next) => {
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
@@ -48,6 +50,14 @@ app.use((req, res, next) => {
 app.use(cookies());
 app.use(bodyParser.json());
 
+app.use(requestLogger);
+
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
+
 app.post('/signin', loginValidation, login);
 app.post('/signup', registerValidation, createUser);
 
@@ -56,13 +66,12 @@ app.use(auth);
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
 
-// Подключаем мидлвару для обработки ошибок валидации
 app.use(errors());
 
 app.use('/', (req, res, next) => {
   next(new NotFoundError(messageError.notFoundError));
 });
-
+app.use(errorLogger);
 app.use(handleErrors);
 
 app.listen(PORT, () => {

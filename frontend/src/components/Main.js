@@ -10,6 +10,8 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function Main({ cards, onAddPlace, onCardClick, onCardDelete, onCardLike, onEditAvatar, onEditProfile }) {
     const currentUser = useContext(CurrentUserContext);
 
+    console.log("process.env.RANDOM_VAR", process.env);
+
     return (
         <main>
             <section className="profile">

@@ -16,11 +16,12 @@ const auth = (req, res, next) => {
   }
 
   const token = authorization.replace(BEARER_PREFIX, '');
-
   let payload;
+  console.log('before auth try', token);
   try {
     // TODO: create production and dev .env files?
     payload = jwt.verify(token, JWT_SECRET);
+    console.log('into auth try');
   } catch (err) {
     next(new UnauthorizedError(messageError.UnauthorizedError));
   }
