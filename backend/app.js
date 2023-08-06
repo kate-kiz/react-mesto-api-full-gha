@@ -25,10 +25,8 @@ mongoose.connect(MONGODB_URL, {
 });
 
 const app = express();
-console.log(process.env.NODE_ENV);
-//const ALLOWED_CORS = [process.env.ALLOWED_ORIGINS];
-const ALLOWED_CORS = ['http://katekiz.nomoreparties.co','https://katekiz.nomoreparties.co'];
-
+const ALLOWED_CORS = [process.env.ALLOWED_ORIGINS_HTTP, process.env.ALLOWED_ORIGINS_HTTPS];
+console.log(process.env);
 
 
 app.use((req, res, next) => {
@@ -55,11 +53,11 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', loginValidation, login);
 app.post('/signup', registerValidation, createUser);
