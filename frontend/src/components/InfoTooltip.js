@@ -3,7 +3,6 @@ import successIcon from '../images/successIcon.svg'
 import failureIcon from '../images/failureIcon.svg'
 
 function InfoTooltip({ name, onClose, isOpen, successTitle, failureTitle, registrated }) {
-    console.log(registrated);
     return (
         <div className={`popup popup_${name} ${isOpen ? `popup_opened` : ``}`}>
             <div className="popup__container">
