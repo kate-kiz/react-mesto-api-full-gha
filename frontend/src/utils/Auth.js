@@ -1,5 +1,5 @@
 
-// изменить ссылку в base url ???
+// change
 const configAuth = {
     BASE_URL: process.env.REACT_APP_API_URL,
     headers: {
@@ -26,6 +26,7 @@ const _checkForErrors = (res) => {
 }
 
 const authorize = (email, password) => {
+    console.log(BASE_URL, ENDPOINT_AUTH);
     return fetch(
         `${BASE_URL}${ENDPOINT_AUTH}`,
         {
