@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-
 const { messageError } = require('../errors/errors');
+
 const { JWT_SECRET, NODE_ENV } = process.env;
 
 const BEARER_PREFIX = 'Bearer ';
