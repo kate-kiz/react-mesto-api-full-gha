@@ -4,8 +4,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const {
   messageError,
 } = require('../errors/errors');
+const { JWT_SECRET, NODE_ENV } = process.env;
 
-const { JWT_SECRET = 'test-secret' } = process.env;
 const BEARER_PREFIX = 'Bearer ';
 
 const auth = (req, res, next) => {
@@ -17,10 +17,10 @@ const auth = (req, res, next) => {
 
   const token = authorization.replace(BEARER_PREFIX, '');
   let payload;
-  console.log('before auth try', token);
+//  console.log('process.env', process.env);
   try {
     // TODO: create production and dev .env files?
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
     console.log('into auth try');
   } catch (err) {
     next(new UnauthorizedError(messageError.UnauthorizedError));

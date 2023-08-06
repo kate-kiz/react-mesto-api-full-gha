@@ -26,6 +26,7 @@ mongoose.connect(MONGODB_URL, {
 
 const app = express();
 const ALLOWED_CORS = [process.env.ALLOWED_ORIGINS_HTTP, process.env.ALLOWED_ORIGINS_HTTPS, 'localhost:3000'];
+console.log(process.env);
 
 app.use((req, res, next) => {
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
