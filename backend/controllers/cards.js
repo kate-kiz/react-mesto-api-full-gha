@@ -1,5 +1,5 @@
 const Card = require('../models/card');
-const { 
+const {
   messageError,
   codeCreated,
 } = require('../errors/errors');
