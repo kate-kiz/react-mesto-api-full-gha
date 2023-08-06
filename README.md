@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.97.4
+IP 158.160.97.4
 
 Frontend https://katekiz.nomoreparties.co/
 

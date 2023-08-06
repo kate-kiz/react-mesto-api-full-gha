@@ -2,7 +2,6 @@ const Card = require('../models/card');
 const { messageError } = require('../errors/errors');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
-//const { trusted } = require('mongoose');
 
 const getCards = (req, res, next) => {
   Card.find({})
