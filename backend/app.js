@@ -26,7 +26,10 @@ mongoose.connect(MONGODB_URL, {
 
 const app = express();
 console.log(process.env.NODE_ENV);
-const ALLOWED_CORS = [process.env.ALLOWED_ORIGINS];
+//const ALLOWED_CORS = [process.env.ALLOWED_ORIGINS];
+const ALLOWED_CORS = ['http://katekiz.nomoreparties.co','https://katekiz.nomoreparties.co'];
+
+
 
 app.use((req, res, next) => {
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
@@ -35,7 +38,7 @@ app.use((req, res, next) => {
   const requestHeaders = req.headers['access-control-request-headers'];
 
   if (ALLOWED_CORS.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', ALLOWED_CORS.join(','));
+    res.header('Access-Control-Allow-Origin', origin);
   }
 
   if (method === 'OPTIONS') {
