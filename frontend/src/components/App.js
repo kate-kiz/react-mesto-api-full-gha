@@ -82,6 +82,7 @@ function App() {
   }
 
   function handleLogin(email, password) {
+    setRegistrated(false);
     Auth.authorize(email, password)
       .then((res) => {
         if (email && password !== '') {
@@ -116,6 +117,7 @@ function App() {
   function deleteToken() {
     localStorage.removeItem('token');
     setLoggedIn(false);
+    setRegistrated(false);
     setUserEmail('');
     navigate('/sign-in', { replace: true });
   }

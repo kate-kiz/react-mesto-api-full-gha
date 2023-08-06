@@ -17,22 +17,12 @@ const auth = (req, res, next) => {
   let payload;
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
-    console.log('into auth try');
   } catch (err) {
     next(new UnauthorizedError(messageError.UnauthorizedError));
   }
 
   req.user = payload;
   return next();
-
-  // try {
-  //   payload = jwt.verify(token, JWT_SECRET);
-  //   req.user = payload;
-  //   next();
-  // } catch (error) {
-  //   console.log('catch');
-  //   next(new UnauthorizedError(messageError.UnauthorizedError));
-  // }
 };
 
 module.exports = {

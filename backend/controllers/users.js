@@ -4,7 +4,10 @@ require('dotenv').config();
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const { messageError } = require('../errors/errors');
+const { 
+  messageError,
+  codeCreated,
+ } = require('../errors/errors');
 // const { handleErrors } = require('../errors/errors');
 
 const { JWT_SECRET, NODE_ENV } = process.env;
@@ -56,7 +59,7 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then((user) => res.send({
+    .then((user) => res.status(codeCreated.OK).send({
       name: user.name, about: user.about, avatar: user.avatar, email: user.email,
     }))
     .catch((error) => next(error));

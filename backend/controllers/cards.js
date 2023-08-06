@@ -1,5 +1,8 @@
 const Card = require('../models/card');
-const { messageError } = require('../errors/errors');
+const { 
+  messageError,
+  codeCreated,
+} = require('../errors/errors');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
@@ -13,7 +16,7 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
   const userId = req.user._id;
   Card.create({ name, link, owner: userId })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.status(codeCreated.OK).send({ data: card }))
     .catch((error) => next(error));
 };
 
